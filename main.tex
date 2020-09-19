@@ -66,7 +66,7 @@ If P1 decrease the amount, it leads to situation where summation of amount not p
 
 In either way nor P1 or P2 can increase the payoff by changing actions, so it's Nash equilibrium.
 \newpage
-\subexercise Proof (50, 50) is a Only Nash Equilibrium
+\subexercise Proof (50, 50) is the Only Nash Equilibrium
 We can show Nash Equilibrium as points both players best-response actions meet.
 The formula is as following:
 \[ BR_{P1} = 
@@ -121,51 +121,114 @@ The Only Point that two Best-Response meet as on (50, 50).
 
 
 \exercise
-
-\subexercise
-My solution to this exercise is a bunch of \textbf{logical symbols}:
-\begin{center}
-  \begin{tabular}{>{\ttfamily}l c @{\hspace{3em}} >{\ttfamily}l c}
-    \toprule
-    \textbackslash{}lor & $\lor$ &
-    \textbackslash{}land & $\land$ \\
-    \textbackslash{}Rightarrow & $\Rightarrow$ &
-    \textbackslash{}Leftrightarrow & $\Leftrightarrow$ \\
-    \textbackslash{}neg & $\neg$ &
-    \textbackslash{}neq & $\neq$ \\
-    \textbackslash{}equiv & $\equiv$ &
-    \textbackslash{}not\textbackslash{}equiv & $\not\equiv$ \\
-    \bottomrule
-  \end{tabular}
-\end{center}
-Although we usually use them inline: $\frac{x}{2} - y > 4 \Rightarrow x > 2(y + 4)$, or in a block:
+\subexercise Formulate of Game
+\\\\
+$
+N = 4000 \text{(number of Player)}\\\\
+A = \{lower, upper\}
+a_i: \text{Action Agent i} \\\\
+A_{-i}: \text{Action Agents other than i} \\\\
+$
 \[
-  \frac{x}{2} - y > 4 \Rightarrow x > 2(y + 4).
+U_{x} = 
+     \begin{cases}
+      {x \over 100} + 45 &\quad\text {if Choose Upper} \\
+      45 + {4000 - x \over 100} &\quad\text{otherwise}\\ 
+     \end{cases}
 \]
 
-\subexercise
-Can't forget the \emph{set operations} and so forth: $P \cup \emptyset \not\subseteq Q$.
+\subexercise Proof (X = 2000) is the Only Nash Equilibrium \\\\
+Nash Happen when equal people choose upper and lower road. X = 2000.\\
+We show in X = 2000 state, neither upper road agents nor lower road agents wish to change their decision.\\
+In state X = 2000 cost of road for all agents equals to 65 minutes any agent who changes the road will increases it's own cost by 0.01 minutes so it's not better score and nothing will change.
 \begin{center}
-  \begin{tabular}{>{\ttfamily}l c @{\hspace{3em}} >{\ttfamily}l c}
-    \toprule
-    \textbackslash{}cap & $\cap$ &
-    \textbackslash{}cup & $\cup$ \\
-    \textbackslash{}setminus & $\setminus$ &
-    \texttt{A\textasciicircum{}\textbackslash{}text\{c\}} & $A^\text{c}$ \\
-    \textbackslash{}mathcal\{P\} & $\mathcal{P}$ &
-    \textbackslash{}mathcal\{U\} & $\mathcal{U}$ \\
-    \textbackslash{}in & $\in$ &
-    \textbackslash{}not\textbackslash{}in & $\not\in$ \\
-    \textbackslash{}subseteq & $\subseteq$ &
-    \textbackslash{}not\textbackslash{}subseteq & $\not\subseteq$ \\
-    \textbackslash{}subset & $\subset$ &
-    \textbackslash{}not\textbackslash{}subset & $\not\subset$ \\
-    \textbackslash{}emptyset & $\emptyset$ &
-    \textbackslash{}varnothing & $\varnothing$ \\
-    \bottomrule
-  \end{tabular}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = left,
+    xlabel = UpperAgent,
+    ylabel = TimeToReach,
+]
+%Below the red parabola is defined
+\addplot [
+    domain=0:4000, 
+    samples=100, 
+    color=red,
+]
+{x/100 + 45};
+\addplot [
+    domain=0:4000, 
+    samples=100, 
+    color=blue,
+]
+{85 - x/100};
+
+\end{axis}
+\end{tikzpicture}
 \end{center}
-You may also want to define sets explicitly: $4 \not\in \{1, 2, 7\}$.
+Red is upper agents and blue is lower agents.\\
+The Only Point that two Best-Response meet as on (2000, 2000).
+
+\subexercise
+\[
+U_{x} = 
+     \begin{cases}
+      {x \over 100} + 45 &\quad\text {if x Agent choose Upper} \\
+      40 + {k\over 100} &\quad\text{if k Agent from X choose C-D}\\ 
+      45 + {4000 - x + k \over 100} &\quad\text{otherwise}\\ 
+     \end{cases}
+\]
+First we find all Nash points in upper and mid road and then check if the answer can be used applied in case three road exists.
+\begin{equation} \label{eq1}
+\begin{split}
+    U_{upper} & = U_{mid}\\
+    {x \over 100} + 45 & = 40 + {k \over 100}\\
+    x & = k - 500
+\end{split}
+\end{equation}
+\[
+U_{x} = 
+     \begin{cases}
+      {x \over 100} + 45 &\quad\text {if x Agent choose Upper} \\
+      45 + {x\over 100} &\quad\text{if k Agent from X choose C-D}\\ 
+      85 &\quad\text{otherwise}\\ 
+     \end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = left,
+    xlabel = UpperAgent,
+    ylabel = C-D Agents,
+]
+%Below the red parabola is defined
+\addplot3[
+    mesh,
+    samples=50,
+    domain=0:4000,
+    % color=blue,
+]
+{x/100 + 45};
+\addplot3[
+    mesh,
+    samples=50,
+    domain=0:4000,
+    % color=red,
+]
+{45 + y/100};
+\addplot3[
+    mesh,
+    samples=50,
+    domain=0:4000,
+    % color=green,
+]
+{85};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+The Only Point that all surface meet as on (4000, 4000, 85).\\
+It means Nash happen when all agents take A-C-D-B road and cost is 85.\\
+Surprisingly adding a new road with cost 0 moved Nash from 65 to 85.
 
 \subexercise
 Some basic mathematical notation: normally, one needs to write \texttt{\textbackslash{}mathbb\{R\}} to get~$\R$, but we have defined shortcuts for you: \texttt{\textbackslash{}R} works!
