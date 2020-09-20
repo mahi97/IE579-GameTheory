@@ -172,195 +172,44 @@ The Only Point that two Best-Response meet as on (2000, 2000).
 \[
 U_{x} = 
      \begin{cases}
-      {x \over 100} + 45 &\quad\text {if x Agent choose Upper} \\
-      40 + {k\over 100} &\quad\text{if k Agent from X choose C-D}\\ 
-      45 + {4000 - x + k \over 100} &\quad\text{otherwise}\\ 
+      [1].\ \ {x \over 100} + 45 &\quad\text {if x Agent choose Upper}; X \le 4000 \\
+      [2].\ \  40 + {k\over 100} &\quad\text{if k Agent from X choose C-D}; K \le X\\
+      [3].\ \  45 + {4000 - x + k \over 100} &\quad\text{otherwise}\\ 
      \end{cases}
 \]
-First we find all Nash points in upper and mid road and then check if the answer can be used applied in case three road exists.
+
 \begin{equation} \label{eq1}
 \begin{split}
-    U_{upper} & = U_{mid}\\
-    {x \over 100} + 45 & = 40 + {k \over 100}\\
-    x & = k - 500
+K \le X & \Rightarrow  40 + {k\over 100} < {x \over 100} + 45 \Rightarrow [2] < [1] \\
+& \Rightarrow \text{Every Agent In Upper Road can decrease the cost by choosing the C-D,}\\ 
+K = X & \Rightarrow 45 + {4000 - x + k \over 1000} = 85 > 40 + {k \over 100} \\
+& \Rightarrow \text{Every Agent In Lower Road can decrease the cost by choosing the C-D,}\\
+& \Rightarrow \text{Eventually All agent choose C-D road and X = K = 4000}
 \end{split}
 \end{equation}
-\[
-U_{x} = 
-     \begin{cases}
-      {x \over 100} + 45 &\quad\text {if x Agent choose Upper} \\
-      45 + {x\over 100} &\quad\text{if k Agent from X choose C-D}\\ 
-      85 &\quad\text{otherwise}\\ 
-     \end{cases}
-\]
+The Nash happen when all agents take A-C-D-B road and cost is 80.\\
+Surprisingly adding a new road with cost 0 moved Nash from 65 to 80.
 
-\begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-    axis lines = left,
-    xlabel = UpperAgent,
-    ylabel = C-D Agents,
-]
-%Below the red parabola is defined
-\addplot3[
-    mesh,
-    samples=50,
-    domain=0:4000,
-    % color=blue,
-]
-{x/100 + 45};
-\addplot3[
-    mesh,
-    samples=50,
-    domain=0:4000,
-    % color=red,
-]
-{45 + y/100};
-\addplot3[
-    mesh,
-    samples=50,
-    domain=0:4000,
-    % color=green,
-]
-{85};
-\end{axis}
-\end{tikzpicture}
-\end{center}
-The Only Point that all surface meet as on (4000, 4000, 85).\\
-It means Nash happen when all agents take A-C-D-B road and cost is 85.\\
-Surprisingly adding a new road with cost 0 moved Nash from 65 to 85.
+\exercise
+\subexercise 1. (B, R, F) \rightarrow (0, 0, 0)
+
+\subexercise Max(Min(U_1)) \Rightarrow Max([0, -1]) \Rightarrow [0]
 
 \subexercise
-Some basic mathematical notation: normally, one needs to write \texttt{\textbackslash{}mathbb\{R\}} to get~$\R$, but we have defined shortcuts for you: \texttt{\textbackslash{}R} works!
-\[ \R \quad \N \quad \Z \quad \Q \quad < \quad > \quad \leq \quad \geq \quad \neq \quad x^2 \quad \sqrt{y} \]
-\[ 3 \cdot 3 = 3^2 = 9 \]
-
-\subexercise
-Here's a math table-like environment for setting up a series of derivations.
-\begin{eqnarray*}
-  && T \\
-  &\equiv& \{ \text{rule to be proven } \Rightarrow \} \\
-  && ? \\
-  &\equiv& \{ \text{rule to be proven } \wedge \} \\
-  && F
-\end{eqnarray*}
-
-But if you don't want to use (a lot of) math inside a table, a normal table also works:
+\\\\
 \begin{center}
-  \begin{tabular}{lcr}
-    \toprule
-    left & center & right \\
-    \midrule
-    l & c & r \\
-    $x+y$ & $\equiv$ & $y + x$ \\
-    \bottomrule
-  \end{tabular}
-  %
-  \hspace{5em}
-  %
-  \begin{tabular}{rl}
-    & $a \vee b$ \\
-    & $\neg a$ \\
-    \hline
-    $\therefore$ & $b$
-  \end{tabular}
+\begin{tabular}{ |c|c|c|c| } 
+\hline
+ & L & R \\
+\hline
+\multirow T & 4.4, 4.4 & 1.4, 5.4 \\ 
+B & 1.4, 5.4 & 2.4, 2.4 \\ 
+\hline
+\end{tabular}
 \end{center}
 
+\subexercise 1. (B, R) \rightarrow (2.4, 2.4)
 
 \exercise
-
-\subexercise Regular expressions can be written as: $(a + \varepsilon)^* (a+b) ab$.
-\subexercise Useful for writing about Turing machines, but also for concluding a proof: $\square$.
-
-In fact, we can write a proof as follows.
-
-\begin{proof}
-  It can easily be seen that this statement is concluded with a \texttt{\textbackslash{}qed} symbol.
-\end{proof}
-
-
-\exercise
-
-We can specify an algorithm in pseudo-code as follows.
-
-\begin{algorithm}[H]
-  \caption{MyIncredibleAlgorithm($A, v$)}
-  \KwIn{an array $A$ of $n$ numbers and a number $v$}
-  \KwOut{an index $i$ such that $A[i] = 42$, or \textsc{NotFound} if no such index exists}
-
-  $i \leftarrow 1$ \;
-  \While{$i \leq n$ \And $A[i] \neq 42$}{
-    $A[i].\textit{update()}$ \;
-    $i \leftarrow i + v^2$
-  }
-  \tcc{the following loop runs over all of $A$}
-  \For(\tcp*[f]{use a different indicator variable here}){$j \leftarrow 1$ \To $n$}{
-    something useful \tcp*{you can write text if that's more succinct}
-    \If{$j$ is even}{
-      $A[j].\textit{flip()}$
-    }
-  }
-  \leIf{$i > n$}{
-    \Return{\textsc{NotFound}}
-  }{
-    \Return{$i$}
-  }
-\end{algorithm}
-
-\noindent For analysis, you may want to know $O, \Theta, \Omega(n \log n)$ (not to be confused with $o, \omega$).
-
-
-\exercise
-
-A figure (such as Figure~\ref{fig:squares}) can be inserted, PDF format is preferred.
-
-\begin{figure}[b] % The letters between square brackets tell LaTeX where the figure can be placed:
-  % `h` means 'right here';
-  % `b` means 'at the bottom of the page';
-  % `t` means 'at the top of the page';
-  % `p` means 'at a separate page (optionally with other figures if that fits).
-  % Specifying only `h` will not work, LaTeX will automatically change that to `ht`.
-  \begin{center}
-    \includegraphics{squares}
-    \caption{Three axis-aligned squares.}
-    \label{fig:squares}
-  \end{center}
-\end{figure}
-
-To insert a figure precisely where you want it to appear, you can leave away the \texttt{figure} environment. You will then however not be able to add a caption or refer to it.
-
-\begin{center}
-  \includegraphics{squares}
-\end{center}
-
-The caption of Figure~\ref{fig:squares} can be left away completely, but you will not be able to refer to the figure anymore if you do that; the \texttt{\textbackslash{}label} only works right after a \texttt{\textbackslash{}caption}. Note how \LaTeX{} can automatically fill in the figure number for you, making it easy to refer to figures. The same approach works for tables, although it is common practice to put the caption before the table instead of below it; this can be seen in Table~\ref{tab:courses}.
-
-\begin{table}[bt]
-  \caption{Courses taught by members of the Applied Geometric Algorithms group.}
-  \label{tab:courses}
-  \begin{center}
-    \begin{tabular}{ll}
-      \toprule
-      \textbf{Course code} & \textbf{Course name} \\
-      \midrule
-      2IL50 & Data Structures \\
-      JBI020 & Foundations of Computing \\
-      \bottomrule
-    \end{tabular}
-  \end{center}
-\end{table}
-
-\subexercise
-As you can see, you can put text before the first subexercise as well, if you wish.
-
-\exercise[6]
-\subexercise[b]
-You can explicitly state the exercise too. This is useful if you cannot answer all questions.
-
-\subexercise
-Further subexercises can be numbered automatically again.
-
-\exercise
-The numbering will continue where it left off.
 
 \end{document}
