@@ -21,7 +21,15 @@
 \usepackage{thmtools}
 \usepackage{systeme}
 \usepackage{mathtools}
+\usepackage{xcolor}
 \usepackage{pgfplots} 
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{minted}
+% \usepackage[margin=1.5in]{geometry}    % For margin alignment
+
+
 \pgfplotsset{width=10cm,compat=1.9} 
  \usepgfplotslibrary{external}
 
@@ -65,7 +73,6 @@ If P1 decrease the amount, it leads to situation where summation of amount not p
 \\
 
 In either way nor P1 or P2 can increase the payoff by changing actions, so it's Nash equilibrium.
-\newpage
 \subexercise Proof (50, 50) is the Only Nash Equilibrium
 We can show Nash Equilibrium as points both players best-response actions meet.
 The formula is as following:
@@ -80,6 +87,7 @@ The formula is as following:
        a_1 - \epsilon &\quad\text{otherwise}\\ 
      \end{cases}
 \]
+
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -470,6 +478,80 @@ For Proving $[\overline{V}(A) = \underline{V}(A)\text{ and  } i^* \in i_{sec}\te
 \newpage
 \exercise
 
-\subexercise Disproof. 
+\subexercise Disproof.
+It might fall into a loop depending of initial actions and size of the game. (For 2 by 2 it works fine)\\
+Example is below table when non of start actions are 1.\\
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+\hline 
+ & 0 & 1 & 2 \\
+\hline
+\multirow 0 & 2 , 0 & 1 , 1 & 0 , 2 \\ 
+\hline
+1 & 1 , 1 & 3 , 3 & 1 , 1 \\ 
+\hline
+2 & 0 , 2 & 1 , 1 & 2 , 0 \\ 
+\hline
+\end{tabular}    
+\end{center}
+
+\subexercise New Algorithm.\\\\
+
+Assume we have a two-player normal form game in which players has $n_i$ actions.
+We can use dynamic programming approach and split the game of $n_1 * n_2$ to a 4 sub-game of $\lceil {n_1 \over 2} \rceil * \lceil {n_2 \over 2} \rceil$ and after solving each sub-game we might reach a Nash for each of them with two corresponding actions, then we reduce our four answers to a new $2 * 2$ game and find the Nash for $2*2$ with BestResponce-Algorithm which shown in last part.
+
+\begin{minted}{python}
+def find_nash_final(G):
+    actions = []  # Two corresponding action which leads to Nash
+    value = 0.0  # value of the Nash
+    # Find Nash by given algorithm using BestResponse
+    return actions, value
+def find_nash(G):
+    n1 = len(G); n2 = len(G[0])
+    if n1 < 3 or n2 < 3:
+        return find_nash_final(G)
+    else:
+        half_n1 = floor(n1 / 2); half_n2 = floor(n2 / 2)
+        # Create four sub-game
+        sub_game = [
+            G[:half_n1, :half_n2],
+            G[:half_n1, half_n2:],
+            G[half_n1:, :half_n2],
+            G[half_n1:, half_n2:]
+        ]
+        # Find Nash of each sub-game
+        actions = []; values = []
+        for game in sub_game:
+            act, val = find_nash(game)
+            actions.append(act)
+            values.append(val)
+        # Create the final game with four state
+        final_game = [
+            [values[1], values[2]],
+            [values[3], values[4]]
+        ]
+        # Solve the final game and return Nash Equilibrium actions and
+        act, val = find_nash_final(final_game)
+        return actions[act[0] * 2 + act[1]], val
+\end{minted}{python}
+
+\proof Assume a pure Nash Equilibrium exists for this game, so it will remains a Nash in any sub-game of this game which contain that state. This algorithm have two phase of divide and merge, which will be discussed in below.\\\\
+(1) In divide phase, after we recursively divide the game to sub-games with size less than 3, we have the opportunity to solve them. In this phase the general pure Nash will surely be selected as Nash of its own sub-game and send to next level. (Definition of pure Nash)
+\\\\
+(2) In merge phase, we create a new sub-game of with four winner state of child sub-games and the general Nash from previous step will be shown in a new sub-game and continue to winning till reach the final game.
+\\\\
+Therefore, at the end the general pure Nash will not get lost, and we find it's values and corresponding actions.
+\\\\
+\textbf{Calculation Time-Complexity}\\
+Assume player 1 has $N$ and player 2 has $M$ actions and $N \ge M$.\\\\
+Sub Game(Case 1): $T_{nash}(0*0) = 0, T_{nash}(1*1) = 0, T_{nash}(2*2) = 4$\\
+Sub Game(Case 2): $T_{nash}(0*N) = 0, T_{nash}(1*N) = N, T_{nash}(2*N) = 2*N$\\
+\\
+Sub Game Order Worst: $O(SubGame) = O(N)$\\
+Sub Game Order Best: $O(SubGame) = constant $\\\\
+Divide: $T_{divide}(MN) = 4T_{divede}(MN/4) = 4^{\log_4{MN}}*T_{subgame} = MN*T_{subgame}$\\\\
+Total Order Worst: $O(Game) =  O(MN) * O(N) = O(MN^2)$\\
+Total Order Best: $O(Game) = O(MN) * constant = O(MN)$\\\\
+Total Order $M = N$: $O(Game) = O(N^2) * constant = O(N^2)$\\\\
 
 \end{document}
