@@ -3,9 +3,9 @@
   % course name (default: 2IL50 Data Structures)
   course = {{IE579 Game Theory and Multi-Agent Reinforcement Learning}},
   % quartile (default: 3)
-%   quartile = {{3}},
+  quartile = {{4}},
   % assignment number/name (default: 1)
-  assignment = 1,
+  assignment = 2,
   % student name (default: Some One)
   name = {{Mohammad Mahdi Rahimi}},
   % student number, NOT S-number (default: 0123456)
@@ -39,95 +39,25 @@
 \begin{document}
 
 \exercise
-\subexercise Formulation of Game
-
-Players are P1 and P2\[ n = 2\].
-
-Action for each Player define a Real number in \[A = \{ a | a \in [0,100] \}\]
-
-Payoff Function for Players:
-\[ U_{P1} = 
-     \begin{cases}
-       a_1 &\quad\text{if }a_1 + a_2 \le 100 \text{ or } a_1 < a_2\\
-       100 - a_2 &\quad\text{else if } a_1 > a_2 \\
-       50 &\quad\text{otherwise}\\ 
-     \end{cases}
-     U_{P2} = 
-     \begin{cases}
-       a_2 &\quad\text{if }a_1 + a_2 \le 100 \text{ or } a_2 < a_1\\
-       100 - a_1 &\quad\text{else if } a_2 > a_1 \\
-       50 &\quad\text{otherwise}\\ 
-     \end{cases}
-\]
-
-\subexercise Proof (50, 50) is a Nash Equilibrium
+\subexercise $x = 1$ Find Pure Nash and SPE
+\\\\
+Nash Equilibrium :\\
+1. \{(R,G),(U)\}\\
+2. \{(R,H),(U)\}\\
+3. \{(L,G),(D)\}\\
+4. \{(L,H),(D)\}\\
 \\
+Sub-game Perfect Nash Equilibrium :\\
+1. \{(R,H),(U)\}
 
-Assume we are currently in (50, 50) situation and this is not a Nash, so there is exist a player that can improve its own payoff by changing action.
-As situation is symmetry regards to players, we assume P1 will change the action.
-\\
 
-If P1 increase the amount, it leads to situation where summation of amount pass 100 limit and P1 receive 50 again. 
-\\
-
-If P1 decrease the amount, it leads to situation where summation of amount not passed 100 limit and P1 receive less than 50.
-\\
-
-In either way nor P1 or P2 can increase the payoff by changing actions, so it's Nash equilibrium.
-\subexercise Proof (50, 50) is the Only Nash Equilibrium
-We can show Nash Equilibrium as points both players best-response actions meet.
-The formula is as following:
-\[ BR_{P1} = 
-     \begin{cases}
-       100 - a_2 &\quad\text{if } a_2 \le 50\\
-       a_2 - \epsilon &\quad\text{otherwise}\\ 
-     \end{cases}
-     BR_{P2} = 
-     \begin{cases}
-       100 - a_1 &\quad\text{if } a_1 \le 50\\
-       a_1 - \epsilon &\quad\text{otherwise}\\ 
-     \end{cases}
-\]
-
-\begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-    axis lines = left,
-    xlabel = $a_1$,
-    ylabel = {$a_2$},
-]
-%Below the red parabola is defined
-\addplot [
-    domain=0:50, 
-    samples=100, 
-    color=red,
-]
-{100 - x};
-\addplot [
-    domain=50:100, 
-    samples=100, 
-    color=red,
-]
-{x - 0.5};
-%Here the blue parabloa is defined
-\addplot [
-    domain=50:100, 
-    samples=100, 
-    color=blue,
-    ]
-    {100 - x};
-\addplot [
-    domain=50:100, 
-    samples=100, 
-    color=blue,
-    ]
-    {x+0.5};
-
-\end{axis}
-\end{tikzpicture}
-\end{center}
-The Only Point that two Best-Response meet as on (50, 50).
-
+\subexercise Range of x for having (R, U) as unique SPE
+\\\\
+For $x > 2$ player-1 choose $(L)$, and for $x = 2$ player-1 is indifferent between $(L)$ and $(R)$ in sub-game, so for the range of $x < 2$, $(R, U)$ is the unique SPE.
+\\\\
+\subexercise  Range of x for having (L) as unique SPE
+\\\\
+For $x > 2$ player-1 choose $(L)$, and it is the unique SPE.
 
 \exercise
 \subexercise Formulate of Game
