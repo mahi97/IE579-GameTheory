@@ -140,7 +140,7 @@
 \pagestyle{fancy}
 
 % ensure that the title is inserted in the document
-\title{\vspace{-2\baselineskip}PSET \agahomework@assignment}
+\title{\vspace{-2\baselineskip}Homework \agahomework@assignment}
 \author{\aga@authorsProcessed}
 \AtBeginDocument{\maketitle}
 
