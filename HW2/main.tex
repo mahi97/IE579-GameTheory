@@ -16,7 +16,6 @@
   firstexercise = 1
 ]{aga-homework}
 
-
 \usepackage{amssymb,latexsym,amsmath,amsthm}
 \usepackage{amsfonts,rawfonts}
 \usepackage{thmtools}
@@ -26,8 +25,12 @@
 \usepackage{pgfplots} 
 \usepackage{amsmath}
 \usepackage{algorithm}
+\usepackage{cancel}
 \usepackage[noend]{algpseudocode}
 \usepackage{minted}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage[dvipsnames]{xcolor}
 % \usepackage[margin=1.5in]{geometry}    % For margin alignment
 
 
@@ -35,6 +38,19 @@
  \usepgfplotslibrary{external}
 
 \tikzexternalize 
+% \tikzset{
+%   % Two node styles for game trees: solid and hollow
+%   solid node/.style={circle,draw,inner sep=2,fill=black},
+%   hollow node/.style={circle,draw,inner sep=2},
+%   empty node/.style={rectangle,draw,fill=white,color=white}
+% }
+
+% macro for entering payoffs
+\newcommand\payoff[1]{
+  $\begin{pmatrix} #1 \end{pmatrix}$
+}
+
+
 
 \begin{document}
 
@@ -60,187 +76,309 @@ For $x > 2$ player-1 choose $(L)$, and for $x = 2$ player-1 is indifferent betwe
 For $x > 2$ player-1 choose $(L)$, and it is the unique SPE.
 
 \exercise
-\subexercise Formulate of Game
+\subexercise All Pure Nash
 \\\\
-$
-N = 4000 \text{(number of Player)}\\\\
-A = \{lower, upper\}
-a_i: \text{Action Agent i} \\\\
-A_{-i}: \text{Action Agents other than i} \\\\
-$
-\[
-U_{x} = 
-     \begin{cases}
-      {\frac{X}{100}} + 45 &\quad\text {if Choose Upper} \\
-      45 + {4000 - x \over 100} &\quad\text{otherwise}\\ 
+Player-1 Actions: $\{L, C, R\}$\\
+Player-2 Actions: $\{U, D\}$\\
+Converting game to a normal-form(3x2) we find following pure Nash equilibrium:\\
+1. $(R, U) = (5, 5)$\\
+2. $(C, D) = (5, 5)$
+
+\subexercise Mixed Nash Equilibrium \\\\
+For finding mixed equilibrium we randomize over pure solutions actions:\\
+Player-1 Plays: $P\{R\} + (1 - P)\{C\}$\\
+Player-2 Plays: $Q\{U\} + (1 - Q)\{D\}$\\
+So we get:\\
+\begin{equation} \label{eq1}
+\begin{split}
+& PQ\{R, U\} + (1 - P)Q\{C, U\} + p(1 - Q)\{R, D\} + (1 - P)(1 - Q)\{C, D\} \\
+= & PQ\{5, 5\} + (1 - P)Q\{0, 0\} + P(1 - Q)\{-15, -15\} + (1 - P)(1 - Q)\{5, 5\}\\
+\Rightarrow &   \begin{cases}
+      U_1 = 5PQ + -15P(1 - Q) + 5(1 - P)(1 - Q) = 25PQ - 20P - 5Q + 5 = P(25Q - 20) - 5Q + 5 \\
+      U_2 = 5PQ + -15P(1 - Q) + 5(1 - P)(1 - Q) = 25PQ - 20P - 5Q + 5 = Q(25Q - 5) - 20P + 5 \\
      \end{cases}
-\]
+\end{split}
+\end{equation}\\
+By looking at best response for each Player:
+\begin{equation} \label{eq1}
+\begin{split}
+BR_1 & = \begin{cases}
+      P = 1 if  Q > \frac{20}{25} \\
+      P = 0 otherwise\\
+     \end{cases}\\
+BR_2 & = \begin{cases}
+      Q = 1\text{ if  }P > \frac{5}{25} \\
+      Q = 0\text{ Otherwise }\\
+     \end{cases}\\
+\end{split}
+\end{equation}\\
+Therefore Two Intersect of Best-Response are (P = 1, Q = 1) and (P = 0, Q = 0) which are same as pure Nash solutions.
 
-\subexercise Proof (X = 2000) is the Only Nash Equilibrium \\\\
-Nash Happen when equal people choose upper and lower road. X = 2000.\\
-We show in X = 2000 state, neither upper road agents nor lower road agents wish to change their decision.\\
-In state X = 2000 cost of road for all agents equals to 65 minutes any agent who changes the road will increases it's own cost by 0.01 minutes so it's not better score and nothing will change.
+\subexercise Behavioral Strategy
+Player-1 Actions: $\{L, C, R\}$\\
+Player-2 Actions: $\{U, D\}$\\
+
+For finding behavioral equilibrium we randomize over all actions:\\
+Player-1 Plays: $P_L\{L\} + P_C\{C\} + P_R\{R\} \text{ ,  } \sum{P} = 1$\\
+Player-2 Plays: $Q_U\{U\} + Q_D\{D\} \text{ ,  } \sum{Q} = 1$\\
+
+By considering equilibrium of (C-R) forest, it is either RU or CD, we do not need to randomize over Q and over (R,C), we can randomize over RU and CD which has same outcome.
+
+One the other hand, LC is always dominated by LL and LR, so we can assume that we don't need to give C any chance and player-1 can always randomize between L and R to receive maximum outcome of behavioral. 
+
+Player-1 Plays: $P\{L\} + (1 -P)\{R\}$\\
+
+So we have utility functions as below:
+\begin{equation} \label{eq1}
+\begin{split}
+& U_1 = U_2 = P^2 + 10P(1-P) + 5(1-P) = -9P^2 + 5P + 5 \\
+\textbf{Maximizing} \Rightarrow & -18P + 5 = 0 \Rightarrow P = \frac{5}{18}\\
+\Rightarrow & max(U_2) = max(U_1) = 5.695
+\end{split}
+\end{equation}\\
+highest expected happen when Player-1 randomize by $\{\frac{5}{18}L, \frac{13}{18}R\}$ and Player-2 always $\{U\}$.
+
+
+\exercise
+\subexercise 
+\\\\
+If mentioned strategy $(S)$ wants to be a sub-game perfect equilibrium, it has to have a better payoff than any other derivation of strategy $(S^\prime)$. 
+\begin{equation} \label{eq1}
+\begin{split}
+U_i(S^\prime) \le U_i(S) \\
+\end{split}
+\end{equation}\\
+And we have utilities as follows:\\
+\begin{equation} \label{eq1}
+\begin{split}
+U_1(S) & = (1 - \delta)\sum^\infty_{t = 1}{4\delta^{t - 1}} = 4 - \frac{4\delta}{1 - \delta} = (1 - \delta)\frac{4}{1 - \delta} = 4\\
+U_1(S^\prime) & = (1 - \delta)(6 + \sum^\infty_{t = 1}{\delta^{t - 1}} - 1) = 5(1 - \delta) + 1 = 6 - 5\delta\\
+\end{split}
+\end{equation}\\
+By replacing (5) in (4) we get:
+\begin{equation} \label{eq1}
+\begin{split}
+6 - 5\delta \le & 4\\
+-5\delta \le & -2\\
+\frac{2}{5} \le & \delta
+\end{split}
+\end{equation}\\
+
+\subexercise
+\\\\
+If mentioned Tit-for-Tat strategy $S$ wants to be a sub-game perfect equilibrium, it has to have a better payoff than any other derivation of strategy $(S^\prime)$.
+\begin{equation} \label{eq1}
+\begin{split}
+U_1(S) & = (1 - \delta)\sum^\infty_{t = 1}{4\delta^{t - 1}} = 4\\
+U_1(S^\prime) & = (1 - \delta)(6 + \sum^{\infty}_{t = 1}{6\delta^{2t}} + \sum^\infty_{t=1}{0 \delta^{2t-1}}) = 6(1 - \delta)(1 + \sum^{\infty}_{t = 1}{\delta^{2t}}) \\
+& = 6(1 - \delta)(\sum^{\infty}_{t = 0}{\delta^{2t}})
+\end{split}
+\end{equation}\\
+First, we proof that $(\sum^{\infty}_{t = 0}{\delta^{2t}})$ is equal $\frac{1}{1 - \delta^2}$ for $0 < \delta < 1$:
+\begin{equation} \label{eq1}
+\begin{split}
+\sum^{\infty}_{t = 0}{\delta^{t}} & = \sum^{\infty}_{t = 0}{\delta^{2t}} + \sum^{\infty}_{t = 0}{\delta^{2t+1}} = \frac{1}{1 - \delta}\\
+\end{split}
+\end{equation}\\
+\begin{equation} \label{eq1}
+\begin{split}
+\sum^{\infty}_{t = 0}{\delta^{2t}} - \sum^{\infty}_{t = 0}{\delta^{2t+1}} = \sum^{\infty}_{t = 0}{\delta^{2t} - \delta^{2t+1}} = (1 - \delta)\sum^{\infty}_{t = 0}{\delta^{2t}}\\
+\end{split}
+\end{equation}\\
+By using (8) and (9):\\
+\begin{equation} \label{eq1}
+\begin{split}
+& 2\sum^{\infty}_{t = 0}{\delta^{2t}} = \frac{1}{1 - \delta} + (1 - \delta)\sum^{\infty}_{t = 0}{\delta^{2t}}\\
+\Rightarrow & (1 + \delta)\sum^{\infty}_{t = 0}{\delta^{2t}} = \frac{1}{1 - \delta}\\
+\Rightarrow & \sum^{\infty}_{t = 0}{\delta^{2t}} = \frac{1}{1 - \delta^2}\\
+\end{split}
+\end{equation}\\
+By applying (10) in (7):\\
+\begin{equation} \label{eq1}
+\begin{split}
+U_1(S) & = 4\\
+U_1(S^\prime) & = 6(1 - \delta)(\frac{1}{1 - \delta^2}) = \frac{6}{1 + \delta}
+\end{split}
+\end{equation}\\
+By replacing (11) in (4) we get:
+\begin{equation} \label{eq1}
+\begin{split}
+\frac{6}{1 + \delta} \le & 4\\
+6 \le & 4 + 4\delta\\
+2 \le & 4\delta\\
+\frac{1}{2} \le \delta
+\end{split}
+\end{equation}\\
+
+\exercise
+\subexercise afssd
+\\\\
 \begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-    axis lines = left,
-    xlabel = UpperAgent,
-    ylabel = TimeToReach,
-]
-%Below the red parabola is defined
-\addplot [
-    domain=0:4000, 
-    samples=100, 
-    color=red,
-]
-{x/100 + 45};
-\addplot [
-    domain=0:4000, 
-    samples=100, 
-    color=blue,
-]
-{85 - x/100};
+\begin{tikzpicture}[scale=1.5]
+\tikzset{
+h/.style={circle,draw=magenta,thick,inner sep=1.5},
+s/.style={h,fill=magenta}
+}
+\tikzstyle{level 1}=[level distance=15mm, sibling distance=50mm]
+\tikzstyle{level 2}=[level distance=15mm, sibling distance=20mm]
+\tikzstyle{level 3}=[level distance=15mm, sibling distance=7mm]
+\node(0)[s, label=above:Nature]{}
+    child{node(1a)[s, label=above:1]{}
+        child{node(2aa)[s, label=left:2]{}
+            child{node(3aaa)[h, label=below:0]{} edge from parent node[left]{$R$}}
+            child{node(3aab)[h, label=below:-1]{} edge from parent node[left]{$P$}}
+            child{node(3aac)[h, label=below:1]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$R$}
+        }
+        child{node(2ab)[s, label=left:2]{}
+            child{node(3aba)[h, label=below:1]{} edge from parent node[left]{$R$}}
+            child{node(3abb)[h, label=below:0]{} edge from parent node[left]{$P$}}
+            child{node(3abc)[h, label=below:-1]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$P$}
+        }
+        child{node(2ac)[s, label=left:2]{}
+            child{node(3aca)[h, label=below:-1]{} edge from parent node[left]{$R$}}
+            child{node(3acb)[h, label=below:1]{} edge from parent node[left]{$P$}}
+            child{node(3acc)[h, label=below:0]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$S$}
+        }
+        edge from parent node[left]{$a$}
+    }
+    child{node(1b)[s, label=above:1]{}
+        child{node(2ba)[s, label=left:2]{}
+            child{node(3baa)[h, label=below:-1]{} edge from parent node[left]{$R$}}
+            edge from parent node[left]{$P$}
+        }
+        child{node(2bb)[s, label=left:2]{}
+            child{node(3bba)[h, label=below:0]{} edge from parent node[left]{$P$}}
+            edge from parent node[left]{$P$}
+        }
+        child{node(2bc)[s, label=left:2]{}
+            child{node(3bca)[h, label=below:1]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$P$}
+        }
+        edge from parent node[left]{$1 - a$}
+    };
 
-\end{axis}
+\draw[dashed, rounded corners=10]($(1a) + (-0.2, 0.25)$)rectangle($(1b) + (0.2, -0.25)$)
 \end{tikzpicture}
 \end{center}
 
-Red is upper agents and blue is lower agents.\\
-The Only Point that two Best-Response meet as on (2000, 2000).
-
-\subexercise
-\[
-U_{x} = 
-     \begin{cases}
-      [1].\ \ {x \over 100} + 45 &\quad\text {if x Agent choose Upper}; X \le 4000 \\
-      [2].\ \  40 + {k\over 100} &\quad\text{if k Agent from X choose C-D}; K \le X\\
-      [3].\ \  45 + {4000 - x + k \over 100} &\quad\text{otherwise}\\ 
-     \end{cases}
-\]
-
-\begin{equation} \label{eq1}
-\begin{split}
-K \le X & \Rightarrow  40 + {k\over 100} < {x \over 100} + 45 \Rightarrow [2] < [1] \\
-& \Rightarrow \text{Every Agent In Upper Road can decrease the cost by choosing the C-D,}\\ 
-K = X & \Rightarrow 45 + {4000 - x + k \over 1000} = 85 > 40 + {k \over 100} \\
-& \Rightarrow \text{Every Agent In Lower Road can decrease the cost by choosing the C-D,}\\
-& \Rightarrow \text{Eventually All agent choose C-D road and X = K = 4000}
-\end{split}
-\end{equation}
-The Nash happen when all agents take A-C-D-B road and cost is 80.\\
-Surprisingly adding a new road with cost 0 moved Nash from 65 to 80.
-
-\exercise
-\subexercise 1. $(B, R, F) \rightarrow (0, 0, 0)$
-
-\subexercise $Max(Min(U_1)) \Rightarrow Max([0, -1]) \Rightarrow [0]$
-
-\subexercise
+\subexercise Normal-Form representation
+\\\\
 \begin{center}
 \begin{tabular}{ |c|c|c|c| } 
 \hline 
- & L & R \\
+ & R & P & S \\
 \hline
-\multirow T & 4.4, 4.4 & 1.4, 5.4 \\ 
-B & 1.4, 5.4 & 2.4, 2.4 \\ 
+(P,R) & $a - 1$ & $a$ & $1 - 2a$ \\ 
 \hline
-\end{tabular}
+(P,P) & -1 & 0 & 1 \\ 
+\hline
+(P,S) & $2a - 1$ & $-a$ & $1 - a$ \\ 
+\hline
+\end{tabular}   if $a = \frac{1}{3} \Rightarrow$
+\begin{tabular}{ |c|c|c|c| } 
+\hline 
+ & R & P & S \\
+\hline
+(P,R) & $-\frac{2}{3}$ & $\frac{1}{3}$ & $\frac{1}{3}$ \\ 
+\hline
+(P,P) & -1 & 0 & 1 \\ 
+\hline
+(P,S) & $-\frac{1}{3}$ & $-\frac{1}{3}$ & $\frac{2}{3}$ \\ 
+\hline
+\end{tabular}    
 \end{center}
 
-\subexercise 1. $(B, R) \rightarrow (2.4, 2.4)$
-
-\exercise
 \subexercise Find Nash Equilibrium
 \\\\
-$
-n: \text{Number of Player}\\\\
-q_i: \text{Quantity of produce from i-th Firm}\\\\
-Q: \text{Action for all Firms} \\\\
-Q^{-i}: \text{Action Firms without i-th} \\\\
-$
-Finding Best Response for i-th Agent by assuming fix action for the rest:\\
+Playing $S$ is dominant strategy for player 1, and player-2 best responce is $(P,R)$ to we have a Nash on: $\{S, (P,R)\}$ with payoff of $\frac{1}{3}$.
+
+\exercise
+\subexercise
+\\\\
+If row agent randomize action by $P$ over $\{U, D\}$ and columns agent by $Q$ over $\{L, R\}$, then the Payoff for agents is as follows:
 \begin{equation} \label{eq1}
 \begin{split}
-U_i(q_1, ..., q_n) & = U_i(q_i) = \begin{cases}
-    (a-Q^{-i}+q_i)q_i - cq_i &\quad\text{if } q_i \le a - Q^{-i} \\
-    -cq_i &\quad\text{if } q_i > a - Q^{-i}
-\end{cases}
+U_1 & = P(1 - Q) + 2(1 - P)Q = P + 2Q - 3PQ \\
+U_2 & = 6PQ + 2P(1 - Q) + (1 - P)Q = 2P + Q + 3PQ
 \end{split}
 \end{equation}\\
+Find the minmax points by derivations:
 \begin{equation} \label{eq1}
 \begin{split}
-K = a - Q^{-1} - c
+maximin(U_1) = \begin{cases}
+      \frac{\partial U_1}{\partial P} \rightarrow 1 - 3Q \rightarrow Q = \frac{1}{3}\textbf{ minimize the utility }\\
+      \frac{\partial U_1}{\partial Q} \rightarrow 2 - 3P \rightarrow P = \frac{2}{3}\textbf{ maximize the utility }\\
+     \end{cases}\\
+maximin(U_2) = \begin{cases}
+      \frac{\partial U_2}{\partial P} \rightarrow 2 + 3Q \rightarrow Q = 1\textbf{ maximize the utility }\\
+      \frac{\partial U_2}{\partial Q} \rightarrow 1 + 3P \rightarrow P = 0\textbf{ minimize the utility }\\
+     \end{cases}\\
 \end{split}
 \end{equation}\\
-\begin{equation} \label{eq1}
-\begin{split}
-BR_i(q_i) = argmax(U_i(q_i)) & = \begin{cases}
-    argmax(q_i(K - q_i)) &\quad\text{if } q_i \le K + c\\
-    argmax(-cq_i) &\quad\text{if } q_i > K + c
-\end{cases}\\
-& = \begin{cases}
-    K \over 2 &\quad\text{if } q_i \le K + c\\
-    0 &\quad\text{if } q_i > K + c
-\end{cases}
-\end{split}
-\end{equation}
+Maximin strategy for Player-2 is $\frac{2}{3}U + \frac{1}{3}D$ with payoff of $\frac{2}{3}$ and other can enforce it by playing $\frac{1}{3}L + \frac{2}{3}R$.
+\\
+Maximin strategy for Player-2 is $L$ with payoff of $1$ and other can enforce it by playing $D$.
 
-Assume we are in situation $q_i > K + c$ and everyone will follow BR and set quantity to 0 then we have:
 
-\begin{equation} \label{eq1}
-\begin{split}
-0 & > K + c \\
-0 & > a - Q^{-1} - c + c\\
-0 & > a
-\end{split}
-\end{equation}
-It means when '$a$' is less than zero, all firms should stop producing.
-
-Now, Assume we are in situation $q_i \le K + c$ and everyone will follow BR and set quantity to $K \over 2$ then we have:
-
-\begin{equation} \label{eq1}
-\begin{split}
-Q & = n({K \over 2}) \\
-K & = a - Q^{-i} - c\\
-K & = a - (n - 1)({K \over 2}) - c\\
-(n+1)K & = 2(a - c)\\
-K & = {2(a - c) \over (n + 1)}\\
-\end{split}
-\end{equation}
-
-This is hold when $q_i \le K + c$ it means:
-\begin{equation} \label{eq1}
-\begin{split}
-{K \over 2} & \le K + c\\
-0 & \le {K \over 2} + c\\
-0 & \le {(a - c) \over (n + 1)} + c
-\end{split}
-\end{equation}
-It means this Best-Response hold when '$c$' is not negative.\\
-In a reasonable world both 'a' and 'c' are not negative.\\
-Final Price if Firms use BR follow this equation: $P = {K \over 2} = {a - c \over n + 1}$\\
-
-\subexercise Change in Price by adding new Firm\\
-
-Price follow this equation: $P = {a - c \over n + 1}$, It is plotted by assuming 'a - c' equals to 100, for n moving between 0 to 100.
-
+\subexercise Achievable and Enforceable Area\\
+Achievable area is a convex area of pure strategy outcomes.
 \begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-    axis lines = left,
-    xlabel = Number of Firms,
-    ylabel = \text{With A-C = 100},
-]
-%Below the red parabola is defined
-\addplot [
-    domain=0:100, 
+\begin{tikzpicture} 
+    \begin{axis}[enlargelimits=0.1]
+        \addplot [thick,color=blue,mark=o,fill=blue, 
+                    fill opacity=0.05,mark size=5pt]coordinates {
+            (0, 0) 
+            (2, 1)
+            (0, 6)
+            (1, 2)
+            (0,6)};
+        \addplot [only marks,thick,color=red,mark=x,mark size=5pt]coordinates {
+            (0, 0) 
+            (0, 6)
+            (1, 2)
+            (1, 3.5)
+            (1, 0.5)
+            (2, 2)};
+            \addplot [
+    domain=0:2, 
     samples=100, 
-    color=red,
-]
-{100 / (x + 1)};
-\end{axis}
-\end{tikzpicture}
+    color=black,
+    ]
+    {1};
+    \addplot +[mark=none, black] coordinates {(2/3, 0) (2/3, 6)};
+    \end{axis}
+\end{tikzpicture}  
 \end{center}
+(1, 2) and (1, 3.5) are both Achievable and Enforceable.
+
+\subexercise Find Nash for Payoff of (1,3)
+\\\\
+\begin{equation} \label{eq1}
+\begin{split}
+(1,3) & \Rightarrow \begin{cases}
+       P + 2Q - 3PQ = 1\\
+       2P + Q + 3PQ = 3\\
+     \end{cases} \Rightarrow 3P + 3Q = 4 \Rightarrow P = \frac{4}{3} - Q \\
+& \Rightarrow \frac{4}{3} - Q + 2Q - 3(\frac{4}{3} - Q)Q = 1 \\
+& \Rightarrow \frac{1}{3} + 1Q - 4Q + 3Q^2 = 0 \\
+\end{split}
+\end{equation}
+\begin{equation} \label{eq1}
+\begin{split}
+& \Rightarrow Q^2 - Q + \frac{1}{9} = 0 \Rightarrow \begin{cases}
+       Q = 0.87, P = \frac{4}{3} - 0.87 = 0.46 \textbf{ True Answers}\\
+       Q = 0.13, P = \frac{4}{3} - 0.13 = 1.20 \textbf{ Out of Bounds}\\
+     \end{cases}\\
+& \Rightarrow \begin{cases}
+       Q = 0.87\\
+       P = 0.46\\
+     \end{cases}\\
+\end{split}
+\end{equation}\\
+If anyone derivate from this Nash, other player enforce the minimum payoff for that player as punishment.
 
 \exercise
 \subexercise Pure Nash and Payoffs
