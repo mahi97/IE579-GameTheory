@@ -124,7 +124,9 @@ Player-2 Plays: $Q_U\{U\} + Q_D\{D\} \text{ ,  } \sum{Q} = 1$\\
 
 By considering equilibrium of (C-R) forest, it is either RU or CD, we do not need to randomize over Q and over (R,C), we can randomize over RU and CD which has same outcome.
 
-One the other hand, LC is always dominated by LL and LR, so we can assume that we don't need to give C any chance and player-1 can always randomize between L and R to receive maximum outcome of behavioral. 
+One the other hand, LC is always dominated by LL and LR, so we can assume that we don't need to give C any chance and player-1 can always randomize between L and R to receive maximum outcome of behavioral.
+
+C is not a best-response, so we exclude it.
 
 Player-1 Plays: $P\{L\} + (1 -P)\{R\}$\\
 
@@ -211,7 +213,7 @@ By replacing (11) in (4) we get:
 \end{equation}\\
 
 \exercise
-\subexercise afssd
+\subexercise Extensive Form of game
 \\\\
 \begin{center}
 \begin{tikzpicture}[scale=1.5]
@@ -293,7 +295,7 @@ s/.style={h,fill=magenta}
 
 \subexercise Find Nash Equilibrium
 \\\\
-Playing $S$ is dominant strategy for player 1, and player-2 best responce is $(P,R)$ to we have a Nash on: $\{S, (P,R)\}$ with payoff of $\frac{1}{3}$.
+Playing $S$ is dominant strategy for player 1, and player-2 best responce is $(P,R)$ to we have a Bayesian Nash on: $\{S, (P,R)\}$ with payoff of $\frac{1}{3}$.
 
 \exercise
 \subexercise
@@ -381,246 +383,147 @@ Achievable area is a convex area of pure strategy outcomes.
 If anyone derivate from this Nash, other player enforce the minimum payoff for that player as punishment.
 
 \exercise
-\subexercise Pure Nash and Payoffs
-\\
-\begin{equation} \label{eq1}
-\begin{split}
-(B, L) & \rightarrow (8, 2)\\
-(T, R) & \rightarrow (2, 8)
-\end{split}
-\end{equation}
-
-\subexercise Mixed Nash and Payoffs
-\begin{equation} \label{eq1}
-\begin{split}
-({2 \over 3}B + {1 \over 3} T, {2 \over 3}R + {1 \over 3}L)
-\end{split}
-\end{equation}
-\begin{equation} \label{eq1}
-\begin{split}
-{4 \over 9}(B,R) + {2 \over 9}(B, L) + {2 \over 9}(T, R) + {1 \over 9}(T, L) = ({44 \over 9}, {44 \over 9})
-\end{split}
-\end{equation}
-
-\subexercise Correlated Equilibrium and Inequalities
 \\\\
-General Inequalities:\\ 
-\begin{equation} \label{eq1}
-\begin{split}
-\sum{P(R = a | R_i  = a_i) u_i(a_i, a_{-i}}) \ge \sum{P(R = a | R_i  \neq a_i) u_i({a^\prime}_i, a_{-i}})
-\end{split}
-\end{equation}
-\\
-Correlated answer set are below:\\ 
-\begin{equation}
-    \begin{split}
-    C \Rightarrow \begin{cases}
-    P_1 \Rightarrow 
-     \begin{cases}
-            T: P(R = L | R_1  = T) u_1(L, T) + P(R = R | R_1  = T) u_1(R, T) \ge\\
-            P(R = L | R_1 = B) u_1(L, B) + P(R = R | R_1  = B) u_1(R, B)\\
-            B: P(R = L | R_1  = B) u_1(L, B) + P(R = R | R_1  = B) u_1(R, B) \ge\\
-            P(R = L | R_1 = T) u_1(L, T) + P(R = R | R_1  = T) u_1(R, T)\\
-     \end{cases}\\
-    P_2 \Rightarrow 
-     \begin{cases}
-            L: P(R = T | R_2  = L) u_2(T, L) + P(R = L | R_1  = B) u_2(L, B) \ge\\
-            P(R = R | R_2 = T) u_2(R, T) + P(R = R | R_2  = B) u_2(R, B)\\
-            R: P(R = T | R_2  = R) u_2(T, R) + P(R = R | R_1  = B) u_2(R, B) \ge\\
-            P(R = L | R_2 = T) u_2(L, T) + P(R = L | R_2  = B) u_2(L, B)\\
-     \end{cases}\\
-    \end{cases}
-    \end{split}
-\end{equation}
-
-\begin{equation}
-    \begin{split}
-    P_{LT}u_1(LT) + P_{RT}u_1(RT) & \ge P_{LB}u_1(LB) + P_{RB}u_1(RB) \\
-    P_{LB}u_1(LB) + P_{RB}u_1(RB) & \ge P_{LT}u_1(LT) + P_{RT}u_1(RT) \\
-    P_{TL}u_2(LT) + P_{BL}u_2(BL) & \ge P_{TR}u_2(TR) + P_{BR}u_2(BR) \\
-    P_{TR}u_2(TR) + P_{BR}u_2(BR) & \ge P_{TL}u_2(LT) + P_{BL}u_2(BL)
-    \end{split}
-\end{equation}
-
-\begin{equation}
-    \begin{split}
-    P_{LT}6 + P_{RT}2 & \ge P_{LB}8 + P_{RB}0 \\
-    P_{LB}8 + P_{RB}0 & \ge P_{LT}6 + P_{RT}2\\
-    P_{TL}6 + P_{BL}2 & \ge P_{TR}8 + P_{BR}0 \\
-    P_{TR}8 + P_{BR}0 & \ge P_{TL}6 + P_{BL}2
-    \end{split}
-\end{equation}
-
-\begin{equation}
-    \begin{split}
-    6P_{LT} + 2P_{RT} & = 8P_{LB} \\
-    6P_{TL} + 2P_{BL} & = 8P_{TR} \\
-    P_{TR} + P_{BR} + P_{TL} + P_{BL} & = 1
-    \end{split}
-\end{equation}
-\\
-After solving equations
-\\
-\begin{equation}
-    \begin{split}
-    P_{LT} = P_{RT} = P_{LB} &= P_c\\
-    3P_c + P_{BR}& = 1 \Rightarrow P_{BR} = 1 - 3P_c\\
-    u_2(P_c) = u_1(P_c) &= P_c(2 + 8 + 6) = 16P_c, P_c \in [0, 1/3]
-    \end{split}
-\end{equation}
-All values that satisfies above equations is a correlated equilibrium.
-
-\subexercise Correlated Equilibrium with Maximum sum of payoffs
-\\
-\\
-Obviously the maximum sum of payoff happen when $P_c$ equals to ${1 \over 3}$ , which means all $P_{LT} = P_{RT} = P_{LB} = {1 \over 3}$ and  $P_{BR} = 0$
-
-\newpage
-\exercise
-\subexercise Proof
-\\
-First we direct proof $\overline{V}(A) = \underline{V}(A)\text{ and  } a_{i^\prime j^\prime }\text{ is Nash }\Rightarrow i^\prime \in i_{sec}\text{, } j^\prime \in j_{sec}$ and then use indirect proof for $\overline{V}(A) = \underline{V}(A)\text{ and  } i^* \in i_{sec}\text{, } j^* \in j_{sec}\Rightarrow a_{i^* j^* }\text{ is Nash}$.
-\\
-\\
-Assume $i^* \in i_{sec}$ and $j^* \in j_{sec}$
-\begin{equation}
-    \begin{split}
-    a_{i^\prime j^\prime} \text{is Nash} & \Rightarrow \begin{cases}
-        a_{i^\prime j^\prime} = \min_i{a_{j^\prime}} \Rightarrow a_{i^\prime j^\prime} = a_{i^* j^\prime}\\
-        a_{i^\prime j^\prime} = \max_j{a_{i^\prime}} \Rightarrow a_{i^\prime j^\prime} = a_{i^\prime j^*}
-    \end{cases}\\
-    \overline{V}(A) = \underline{V}(A) & \Rightarrow \max_j{a_{i^* j}} = \min_i{a_{i j^*}} = a_{i^* j^*}\\
-    \begin{cases}
-        a_{i^* j^*} \ge a_{i^* j^\prime}\\
-        a_{i^* j^*} \le a_{i^\prime j^*}
-    \end{cases} & \Rightarrow \begin{cases}
-        a_{i^* j^*} \ge a_{i^\prime j^\prime}\\
-        a_{i^* j^*} \le a_{i^\prime j^\prime}
-    \end{cases} \Rightarrow a_{i^*, j^*} =  a_{i^\prime j^\prime}
-    \end{split}
-\end{equation}
-
-\begin{equation}
-    \begin{split}
-        a_{i^\prime j^\prime} & = a_{i^*, j^*} \\
-        \min_i{a_{i j^\prime}} & = min_i{a_{i j^*}}\\
-        \Rightarrow \min_i{a_{i j^\prime}} & \ge \min_i{a_{ij}}\\
-        \Rightarrow j\prime & \in j_{sec}
-    \end{split}
-\end{equation}
-
-\begin{equation}
-    \begin{split}
-        a_{i^\prime j^\prime} & = a_{i^*, j^*} \\
-        \max_j{a_{i\prime i}} & = max_j{a_{i^* j}}\\
-        \Rightarrow \max_j{a_{i^\prime j}} & \le \max_j{a_{ij}}\\
-        \Rightarrow i\prime & \in i_{sec}
-    \end{split}
-\end{equation}
-\\
-\\
-For Proving $[\overline{V}(A) = \underline{V}(A)\text{ and  } i^* \in i_{sec}\text{, } j^* \in j_{sec} \Rightarrow a_{i^* j^* }\text{ is Nash}]$, let's assume that there are such $i^*$ and $j^*$ which satisfies player security strategy but are not Nash equilibrium. In this case if a Nash equilibrium exists, we assume in $(i^\prime, j^\prime)$ then $a_{i^\prime j^\prime}$ should be less than $a_{i^*, j^\prime}$ and more than $a_{i^\prime j^*}$, Which leads to $i^*$ and $j^*$ are no longer a security strategies and it contrast with our primary assumptions, so $(i^*, j^*)$ should be a Nash equilibrium.
-
-\subexercise Proof
-
-\begin{equation}
-    \begin{split}
-        a_{i_1j_1} & \Rightarrow \begin{cases}
-        a_{i_1j_1} \le min_i{a_{ij_1}} \Rightarrow a_{i_1j_1} \le a_{i_2j_1}\\
-        a_{i_1j_1} \ge max_j{a_{i_1j}} \Rightarrow a_{i_1j_1} \ge a_{i_1j_2}
-        \end{cases}\\
-        a_{i_2j_2} & \Rightarrow \begin{cases}
-        a_{i_2j_2} \le min_i{a_{ij_2}} \Rightarrow a_{i_2j_2} \le a_{i_1j_2}\\
-        a_{i_2j_2} \ge max_j{a_{i_2j}} \Rightarrow a_{i_2j_2} \ge a_{i_2j_1}
-        \end{cases}
-    \end{split}
-\end{equation}
-
-\begin{equation}
-    \begin{split}
-         & a_{i_1j_1} \le  a_{i_2j_1} \le  a_{i_2j_2} \le  a_{i_1j_2} \le  a_{i_1j_1}\\
-         \Rightarrow & a_{i_1j_1} =  a_{i_2j_1} =  a_{i_2j_2} =  a_{i_1j_2}\\
-         \Rightarrow & \text{Therefore, all four points are Nash equilibrium}
-    \end{split}
-\end{equation}
-
-\newpage
-\exercise
-
-\subexercise Disproof.
-It might fall into a loop depending of initial actions and size of the game. (For 2 by 2 it works fine)\\
-Example is below table when non of start actions are 1.\\
+Extensive-Form representation
 \begin{center}
-\begin{tabular}{ |c|c|c|c| } 
+\begin{tikzpicture}[scale=1.5]
+\tikzset{
+h/.style={circle,draw=magenta,thick,inner sep=1.5},
+s/.style={h,fill=magenta}
+}
+\tikzstyle{level 1}=[level distance=15mm, sibling distance=40mm]
+\tikzstyle{level 2}=[level distance=15mm, sibling distance=20mm]
+\tikzstyle{level 3}=[level distance=15mm, sibling distance=10mm]
+\node(0)[s, label=above:Nature]{}
+    child{node(1a)[s, label=above:1]{}
+        child{node(2aa)[s, label=left:2]{}
+            child{node(3aaa)[h, label=below:{$(2,1)$}]{} edge from parent node[left]{$B$}}
+            child{node(3aab)[h, label=below:{$(0,0)$}]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$B$}
+        }
+        child{node(2ab)[s, label=left:2]{}
+            child{node(3aba)[h, label=below:{$(0,0)$}]{} edge from parent node[left]{$B$}}
+            child{node(3abb)[h, label=below:{$(1,2)$}]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$S$}
+        }
+        edge from parent node[left]{$\frac{1}{2}$}
+    }
+    child{node(1b)[s, label=above:1]{}
+        child{node(2ba)[s, label=left:2]{}
+            child{node(3baa)[h, label=below:{$(2,0)$}]{} edge from parent node[left]{$B$}}
+            child{node(3baa)[h, label=below:{$(0,2)$}]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$B$}
+        }
+        child{node(2bb)[s, label=left:2]{}
+            child{node(3bba)[h, label=below:{$(0,1)$}]{} edge from parent node[left]{$B$}}
+            child{node(3bba)[h, label=below:{$(1,0)$}]{} edge from parent node[left]{$S$}}
+            edge from parent node[left]{$S$}
+        }
+        edge from parent node[left]{$\frac{1}{2}$}
+    };
+
+\draw[dashed, rounded corners=10]($(1a) + (-0.2, 0.25)$)rectangle($(1b) + (0.2, -0.25)$)
+\end{tikzpicture}
+\end{center}
+
+Normal-Form representation
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
 \hline 
- & 0 & 1 & 2 \\
+ & BB & BS & SB & SS \\
 \hline
-\multirow 0 & 2 , 0 & 1 , 1 & 0 , 2 \\ 
+B & $(2, 0.5)$ & $(2, 1.5)$ & $(1, 0)$ & $(0, 1)$ \\ 
 \hline
-1 & 1 , 1 & 3 , 3 & 1 , 1 \\ 
-\hline
-2 & 0 , 2 & 1 , 1 & 2 , 0 \\ 
+S & $(0, 0.5)$ & $(0.5, 0)$ & $(0.5, 1.5)$ & $(1, 1)$ \\ 
 \hline
 \end{tabular}    
 \end{center}
 
-\subexercise New Algorithm.\\\\
-
-Assume we have a two-player normal form game in which players has $n_i$ actions.
-We can use dynamic programming approach and split the game of $n_1 * n_2$ to a 4 sub-game of $\lceil {n_1 \over 2} \rceil * \lceil {n_2 \over 2} \rceil$ and after solving each sub-game we might reach a Nash for each of them with two corresponding actions, then we reduce our four answers to a new $2 * 2$ game and find the Nash for $2*2$ with BestResponce-Algorithm which shown in last part.
-
-\begin{minted}{python}
-def find_nash_final(G):
-    actions = []  # Two corresponding action which leads to Nash
-    value = 0.0  # value of the Nash
-    # Find Nash by given algorithm using BestResponse
-    return actions, value
-def find_nash(G):
-    n1 = len(G); n2 = len(G[0])
-    if n1 < 3 or n2 < 3:
-        return find_nash_final(G)
-    else:
-        half_n1 = floor(n1 / 2); half_n2 = floor(n2 / 2)
-        # Create four sub-game
-        sub_game = [
-            G[:half_n1, :half_n2],
-            G[:half_n1, half_n2:],
-            G[half_n1:, :half_n2],
-            G[half_n1:, half_n2:]
-        ]
-        # Find Nash of each sub-game
-        actions = []; values = []
-        for game in sub_game:
-            act, val = find_nash(game)
-            actions.append(act)
-            values.append(val)
-        # Create the final game with four state
-        final_game = [
-            [values[1], values[2]],
-            [values[3], values[4]]
-        ]
-        # Solve the final game and return Nash Equilibrium actions and
-        act, val = find_nash_final(final_game)
-        return actions[act[0] * 2 + act[1]], val
-\end{minted}{python}
-
-\proof Assume a pure Nash Equilibrium exists for this game, so it will remains a Nash in any sub-game of this game which contain that state. This algorithm have two phase of divide and merge, which will be discussed in below.\\\\
-(1) In divide phase, after we recursively divide the game to sub-games with size less than 3, we have the opportunity to solve them. In this phase the general pure Nash will surely be selected as Nash of its own sub-game and send to next level. (Definition of pure Nash)
+Find Nash Equilibrium
 \\\\
-(2) In merge phase, we create a new sub-game of with four winner state of child sub-games and the general Nash from previous step will be shown in a new sub-game and continue to winning till reach the final game.
-\\\\
-Therefore, at the end the general pure Nash will not get lost, and we find it's values and corresponding actions.
-\\\\
-\textbf{Calculation Time-Complexity}\\
-Assume player 1 has $N$ and player 2 has $M$ actions and $N \ge M$.\\\\
-Sub Game(Case 1): $T_{nash}(0*0) = 0, T_{nash}(1*1) = 0, T_{nash}(2*2) = 4$\\
-Sub Game(Case 2): $T_{nash}(0*N) = 0, T_{nash}(1*N) = N, T_{nash}(2*N) = 2*N$\\
-\\
-Sub Game Order Worst: $O(SubGame) = O(N)$\\
-Sub Game Order Best: $O(SubGame) = constant $\\\\
-Divide: $T_{divide}(MN) = 4T_{divede}(MN/4) = 4^{\log_4{MN}}*T_{subgame} = MN*T_{subgame}$\\\\
-Total Order Worst: $O(Game) =  O(MN) * O(N) = O(MN^2)$\\
-Total Order Best: $O(Game) = O(MN) * constant = O(MN)$\\\\
-Total Order $M = N$: $O(Game) = O(N^2) * constant = O(N^2)$\\\\
+We have Bayesian Nash on $\{(B, BS\}$, so no one will derivate from that actions.
+
+
+\exercise
+\subexercise Find Equilibrium
+\begin{equation}
+    \begin{split}
+        \begin{cases}
+        U_1 = q_1(a - q_1 - q_2 - C) = (a - C)q_1 - q_2q_1 - q^2_1\\
+        U_2 = q_2(a - q_1 - q_2 - C) = (a - C)q_2 - q_1q_2 - q^2_2\\
+        \end{cases}\\
+    \end{split}
+\end{equation}\\
+The Best Response for player-2 can be shown as follows:\\
+\begin{equation}
+    \begin{split}
+        & \frac{\partial U_2}{\partial q_2} = (a - C) - q_1 - 2q_2 = 0\\
+        \Rightarrow & q^*_2 = \frac{a - c - q_1}{2}
+    \end{split}
+\end{equation}\\
+One the other hand, firm-1 is not certain about cost of firm-2 to utility of firm-1 can be described as below:\\
+\begin{equation}
+    \begin{split}
+        U_1 = (a - C)q_1 - (\theta q^*_L + (1 - \theta) q^*_H)q_1 - q^2_1\\
+    \end{split}
+\end{equation}\\
+So the best response of firm-1 is:
+\begin{equation}
+    \begin{split}
+        & \frac{\partial U_1}{\partial q_1} = a - C - \theta q^*_L - (1 - \theta) q^*_H - 2q_1 = 0\\
+        \Rightarrow & q^*_1 =  \frac{1}{2}(a - C - \theta q^*_L - (1 - \theta) q^*_H)
+    \end{split}
+\end{equation}\\
+By replacing (18) in (20) we have:
+\begin{equation}
+    \begin{split}
+        q^*_1 & =  \frac{1}{2}(a - C - \theta \frac{a - C_L - q^*_1}{2} - (1 - \theta) \frac{a - C_H - q^*_1}{2})\\
+        2q^*_1 - \frac{1}{2}q^*_1 & = \frac{1}{2}(a - 2C + \theta C_L + (1 - \theta) C_H)\\
+        q^*_1 & = \frac{1}{3}(a - 2C + \theta C_L + (1 - \theta) C_H)\\
+        \Rightarrow q^*_H & =  \frac{1}{3}(a - 2C_H + C)\\
+        \Rightarrow q^*_L & =  \frac{1}{3}(a - 2C_L + C)\\
+        \Rightarrow q^*_2 & =  \frac{1}{3}(a - C)
+    \end{split}
+\end{equation}\\
+By replacing (21) in utilities:
+\begin{equation}
+    \begin{split}
+        & \begin{cases}
+        U_1 = (a - C)q_1 - q_2q_1 - q^2_1 > 0\\
+        U_2 = (a - C)q_2 - q_1q_2 - q^2_2 > 0\\
+        \end{cases} \Rightarrow \begin{cases}
+        a - C - q_2 - q_1 > 0\\
+        a - C - q_1 - q_2 > 0\\
+        \end{cases} \Rightarrow a - C > q_1 + q_2\\
+    \end{split}
+\end{equation}\\
+By replacing (21) in (22):
+\begin{equation}
+    \begin{split}
+        a - C & > \frac{1}{3}(a - 2C + \theta C_L + (1 - \theta C_H) + \frac{1}{3}(a - C)\\
+        2a - 2C & > a - 2C + \theta C_L + (1 - \theta) C_H\\
+        a & > \theta C_L + (1 - \theta) C_H + (2\theta - 1)C_L - (2\theta - 1)C_L\\
+        a & > (1 - \theta) C_L + (1 - \theta) C_H + (2\theta - 1)C_L \\
+        C_H - C_L & < \frac{a - (2\theta - 1)C_L}{1 - \theta} \textbf{ Upper bound to have positive utility for both firm }
+    \end{split}
+\end{equation}
+\subexercise
+\begin{equation}
+    \begin{split}
+    q^*_1 = & \begin{cases}
+        \frac{1}{3}(a - 2C + C_L) \text{ if } C_2 = C_L\\
+        \frac{1}{3}(a - 2C + C_H) \text{ if } C_2 = C_H\\
+        \end{cases} \\\\
+    \Rightarrow & q^L_1 \le q^*_1 \textbf{ and } q^H_1 \ge q^*_1 
+    \end{split}
+\end{equation}
+
+
+\exercise
+
+
+\exercise
+
+
 
 \end{document}
