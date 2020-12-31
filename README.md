@@ -2,7 +2,7 @@
 
 **Homework 1**: Nash Equilibirum and Corrolated Nash Equilibirum (Pure and Mix)
 
-**Homework 2**: Finding Nash in Repeated and Sequential Games + Implement and tune a Graph Neural Network (GNN.ipynb)
+**Homework 2**: Finding Nash in Repeated and Sequential Games + Implement and tune a Graph Neural Network
 
 **Homework 3**: Single Agent RL for controlling traffic in a crossroad on SUMO framework
 
